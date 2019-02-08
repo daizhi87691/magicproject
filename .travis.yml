@@ -1,15 +1,20 @@
-sudo: false
 language: java
 jdk:
-  - openjdk7
-  - oraclejdk7
   - oraclejdk8
+script: "mvn clean install -Pgwttest"
+
 notifications:
-  email: false
+  webhooks:
+    urls:
+      - https://webhooks.gitter.im/e/21541a510dc29899ac85
+
+
+    on_success: always
+    on_failure: always
 
 before_install:
-  - wget https://github.com/SpigotMC/BungeeCord/archive/e7be3c6b1e58f89759941315e203470991a0b711.zip
-  - unzip e7be3c6b1e58f89759941315e203470991a0b711.zip
-  - cp -rT BungeeCord-e7be3c6b1e58f89759941315e203470991a0b711 ./
-  - rm -r BungeeCord-e7be3c6b1e58f89759941315e203470991a0b711
-  - rm e7be3c6b1e58f89759941315e203470991a0b711.zip
+  - wget https://github.com/junkdog/artemis-odb/archive/7ca5a8119537034414028175a5eec6ec7628dd44.zip
+  - unzip 7ca5a8119537034414028175a5eec6ec7628dd44.zip
+  - cp -rT artemis-odb-7ca5a8119537034414028175a5eec6ec7628dd44 ./
+  - rm -r artemis-odb-7ca5a8119537034414028175a5eec6ec7628dd44
+  - rm 7ca5a8119537034414028175a5eec6ec7628dd44.zip
