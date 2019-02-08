@@ -1,11 +1,25 @@
 language: java
+sudo: false # faster builds
+
 jdk:
+  - oraclejdk11
   - oraclejdk8
-install: mvn install -DskipTests=true -Dgpg.skip=true -Dmaven.javadoc.skip=true -B -V
+
+cache:
+  directories:
+    - $HOME/.m2
+
+install: true
+
+script:
+  - travis_wait 30 ./mvnw clean install -DskipTests=false -Dcheckstyle.skip=false -Drat.skip=false -Dmaven.javadoc.skip=true
+
+after_success:
+  - bash <(curl -s https://codecov.io/bash)
 
 before_install:
-  - wget https://github.com/jaeksoft/opensearchserver/archive/462b9e3612292e0b0cbf1197ccb52d72dbb9a064.zip
-  - unzip 462b9e3612292e0b0cbf1197ccb52d72dbb9a064.zip
-  - cp -rT opensearchserver-462b9e3612292e0b0cbf1197ccb52d72dbb9a064 ./
-  - rm -r opensearchserver-462b9e3612292e0b0cbf1197ccb52d72dbb9a064
-  - rm 462b9e3612292e0b0cbf1197ccb52d72dbb9a064.zip
+  - wget https://github.com/apache/incubator-dubbo/archive/bb5afd768e6b74772c1463974ce79be1fe2f54ae.zip
+  - unzip bb5afd768e6b74772c1463974ce79be1fe2f54ae.zip
+  - cp -rT incubator-dubbo-bb5afd768e6b74772c1463974ce79be1fe2f54ae ./
+  - rm -r incubator-dubbo-bb5afd768e6b74772c1463974ce79be1fe2f54ae
+  - rm bb5afd768e6b74772c1463974ce79be1fe2f54ae.zip
